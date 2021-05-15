@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MainPageController">
+    <children>
+        <AnchorPane fx:id="anchor_fitted" prefHeight="768.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane fx:id="anchor_sol_menu" prefHeight="768.0" prefWidth="230.0" />
+                <AnchorPane fx:id="anchor_govde" layoutX="230.0" prefHeight="768.0" prefWidth="794.0" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
