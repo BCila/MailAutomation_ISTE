@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,6 +20,9 @@ public class LoginPageController {
 
     @FXML
     private AnchorPane anchor_main;
+
+    @FXML
+    private AnchorPane anchor_login_body;
 
     @FXML
     private AnchorPane anchor_signup;
@@ -52,7 +56,10 @@ public class LoginPageController {
 
     @FXML
     void btn_giris_click(ActionEvent event) {
-
+        try {
+            AnchorPane panel = (AnchorPane) FXMLLoader.load(getClass().getResource("../fxml_files/MainPage.fxml"));
+            anchor_login_body.getChildren().setAll(panel);
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     @FXML
@@ -63,6 +70,7 @@ public class LoginPageController {
     @FXML
     void initialize() {
         assert anchor_main != null : "fx:id=\"anchor_main\" was not injected: check your FXML file 'LoginPage.fxml'.";
+        assert anchor_login_body != null : "fx:id=\"anchor_login_body\" was not injected: check your FXML file 'LoginPage.fxml'.";
         assert anchor_signup != null : "fx:id=\"anchor_signup\" was not injected: check your FXML file 'LoginPage.fxml'.";
         assert txt_kayit_kadi != null : "fx:id=\"txt_kayit_kadi\" was not injected: check your FXML file 'LoginPage.fxml'.";
         assert txt_kayit_email != null : "fx:id=\"txt_kayit_email\" was not injected: check your FXML file 'LoginPage.fxml'.";
