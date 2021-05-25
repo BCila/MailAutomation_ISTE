@@ -58,6 +58,7 @@ public class LoginPageController {
     void btn_giris_click(ActionEvent event) {
         try {
             AnchorPane panel = (AnchorPane) FXMLLoader.load(getClass().getResource("../fxml_files/MainPage.fxml"));
+            panel.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
             anchor_login_body.getChildren().setAll(panel);
         } catch (Exception e) {e.printStackTrace();}
     }

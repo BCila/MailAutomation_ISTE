@@ -1,0 +1,15 @@
+.button {
+    -fx-background-color: #ff7f50;
+    -fx-text-fill: white;
+    -fx-border-color: linear-gradient(to top right, white, #6a5acd);
+    -fx-border-width: 3px;
+}
+#btn_menu_cikis:hover, #btn_menu_mailgonder:hover, #btn_menu_yonet:hover {
+    -fx-background-color: #2F4E68;
+}
+#btn_menu_cikis:pressed, #btn_menu_mailgonder:pressed, #btn_menu_yonet:pressed {
+    -fx-background-color: #6a5acd;
+}
+#anchor_sol_menu {
+    -fx-background-color: #6a5acd;
+}
