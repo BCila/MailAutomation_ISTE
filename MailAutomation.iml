@@ -7,7 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="JavaFX_ISTE" level="project" />
+    <orderEntry type="library" name="JavaFX_ISTE" level="project" />
     <orderEntry type="library" name="JavaMail" level="project" />
+    <orderEntry type="library" name="JavaFX_MySql" level="project" />
   </component>
 </module>
