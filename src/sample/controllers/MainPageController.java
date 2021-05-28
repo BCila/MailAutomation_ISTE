@@ -1,17 +1,17 @@
 package sample.controllers;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class MainPageController {
+public class MainPageController extends LoginPageController {
 
     @FXML
     private ResourceBundle resources;
@@ -42,15 +42,38 @@ public class MainPageController {
 
     @FXML
     private Label lbl_usermail;
+    public void displayUsermail(String usermail) {
+        lbl_usermail.setText(usermail);
+    }
 
     @FXML
     private Label lbl_username;
+    public void displayUsername(String username) {
+        lbl_username.setText(username);
+    }
+
 
     @FXML
     void btn_menu_cikis_click(ActionEvent event) {
-        System.out.println("cikis");
-        Stage stage = (Stage) btn_menu_cikis.getScene().getWindow();
-        stage.close();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Çıkış İşlemi");
+        alert.setHeaderText("Programdan çıkmak üzeresiniz.");
+        alert.setContentText("Programdan çıkış yapmak istediğinize emin misiniz? ");
+
+        ButtonType buttonTypeOk = new ButtonType("Evet", ButtonBar.ButtonData.YES);
+        ButtonType buttonTypeCancel = new ButtonType("Hayır", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeOk,buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOk){
+            System.out.println("cikis");
+            Stage stage = (Stage) btn_menu_cikis.getScene().getWindow();
+            stage.close();
+
+        } else {
+            alert.close();
+        }
+
     }
 
     @FXML
@@ -67,7 +90,8 @@ public class MainPageController {
     void btn_menu_yonet_click(ActionEvent event) {
         System.out.println("yonet");
         try {
-            AnchorPane panel = (AnchorPane) FXMLLoader.load(getClass().getResource("../fxml_files/Contacts.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/Contacts.fxml"));
+            AnchorPane panel = (AnchorPane) loader.load();
             panel.getStylesheets().add(getClass().getResource("../css_files/Contacts.css").toExternalForm());
             anchor_govde.getChildren().setAll(panel);
         } catch (Exception e) {e.printStackTrace();}

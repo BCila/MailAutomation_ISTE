@@ -15,7 +15,8 @@ import sample.emailValidation.isValidAddress;
 import java.sql.*;
 
 
-public class LoginPageController {
+public class LoginPageController{
+
 
     public LoginPageController() {
         baglanti= VeritabaniUtil.Baglan();
@@ -55,7 +56,7 @@ public class LoginPageController {
     private AnchorPane anchor_login;
 
     @FXML
-    private TextField txt_giris_kadi;
+    public TextField txt_giris_kadi;
 
     @FXML
     private Button btn_giris;
@@ -67,6 +68,8 @@ public class LoginPageController {
     PreparedStatement sorguIfadesi = null;
     ResultSet getirilen=null;
     String sql;
+    String kullanici_adi;
+
 
     @FXML
     void btn_giris_click(ActionEvent event) {
@@ -78,25 +81,74 @@ public class LoginPageController {
             sorguIfadesi.setString(3,txt_giris_parola.getText().trim());
 
             ResultSet getirilen=sorguIfadesi.executeQuery();
-
             if (!getirilen.next()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Hata");
                 alert.setHeaderText("Kullanıcı Adı veya Şifre Hatalı");
                 alert.setContentText("Lütfen Kullanıcı Adı veya Şifrenizi kontrol ediniz.");
-
                 alert.showAndWait();
             }
             else {
                 try {
+                    /*
+                    String username = txt_giris_kadi.getText();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/MainPage.fxml"));
+
+                    MainPageController mpcontroller = loader.getController();
+                    mpcontroller.displayUsername(username);
+                    */
+
+                    /*
                     AnchorPane panel = (AnchorPane) FXMLLoader.load(getClass().getResource("../fxml_files/MainPage.fxml"));
                     panel.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
                     anchor_login_body.getChildren().setAll(panel);
+                     */
+                    /*
+                    Stage stage1 = new Stage();
+                    AnchorPane anchor1 = (AnchorPane)FXMLLoader.load(getClass().getResource("../fxml_files/MainPage.fxml"));
+                    Scene scene = new Scene(anchor1,1024,768);
+                    scene.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
+                    stage1.resizableProperty().setValue(false);
+                    stage1.setScene(scene);
+                    stage1.show();
+
+                     */
+                    kullanici_adi="select mail_adres from kullanicilar where k_adi=?";
+                    sorguIfadesi=baglanti.prepareStatement(kullanici_adi);
+                    sorguIfadesi.setString(1,txt_giris_kadi.getText().trim());
+                    ResultSet get_kullanici_adi = sorguIfadesi.executeQuery();
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/MainPage.fxml"));
+                    AnchorPane pane2 = (AnchorPane) loader.load();
+                    pane2.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
+
+                    MainPageController mpCont = loader.getController();
+                    mpCont.displayUsername(txt_giris_kadi.getText());
+                    while (get_kullanici_adi.next()) {
+                        mpCont.displayUsermail(get_kullanici_adi.getString("mail_adres"));
+                    }
+                    anchor_login_body.getChildren().setAll(pane2);
+
+                    /*
+                    Stage stage2=new Stage();
+                    stage2.setScene(scene2);
+                    stage2.getIcons().add(new Image(getClass().getResourceAsStream("../img/iconw.png")));
+                    stage2.show();
+                    */
+
+
+
+
+
                 } catch (Exception e) {e.printStackTrace();}
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public TextField getTxt_giris_kadi() {
+        return txt_giris_kadi;
     }
 
     @FXML

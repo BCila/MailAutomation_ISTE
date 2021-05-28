@@ -1,3 +1,8 @@
 #anchor_parent {
     -fx-background-color: #2F4E68;
+    -fx-fill: black;
+}
+#kayitlar_tablo {
+    -fx-fill: black;
+    -fx-background-color: gray;
 }
