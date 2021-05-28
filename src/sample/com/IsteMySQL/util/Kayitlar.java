@@ -6,7 +6,7 @@ public class Kayitlar {
     private String kayit_soyad;
     private String kayit_mail;
 
-    Kayitlar() {
+    public Kayitlar() {
     }
 
     public Kayitlar(int kayit_id, String kayit_ad, String kayit_soyad, String kayit_mail) {

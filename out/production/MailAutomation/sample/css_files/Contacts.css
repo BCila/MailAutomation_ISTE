@@ -6,3 +6,6 @@
     -fx-fill: black;
     -fx-background-color: gray;
 }
+#lbl_controller {
+    -fx-fill: red;
+}

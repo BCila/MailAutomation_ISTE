@@ -15,6 +15,7 @@ import sample.emailValidation.isValidAddress;
 import java.sql.*;
 
 
+
 public class LoginPageController{
 
 
@@ -113,14 +114,16 @@ public class LoginPageController{
                     stage1.show();
 
                      */
+
                     kullanici_adi="select mail_adres from kullanicilar where k_adi=?";
                     sorguIfadesi=baglanti.prepareStatement(kullanici_adi);
                     sorguIfadesi.setString(1,txt_giris_kadi.getText().trim());
                     ResultSet get_kullanici_adi = sorguIfadesi.executeQuery();
 
+
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/MainPage.fxml"));
                     AnchorPane pane2 = (AnchorPane) loader.load();
-                    pane2.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
+                    //pane2.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
 
                     MainPageController mpCont = loader.getController();
                     mpCont.displayUsername(txt_giris_kadi.getText());
