@@ -87,8 +87,6 @@ public class ContactsController {
     @FXML
     private TableColumn<Kayitlar, String> tablo_mail;
 
-
-
     public void degerleriGetir(TableView tablo) {
         sql="select * from kayitlar where kullanici_id=(select id from kullanicilar where k_adi=?)";
         ObservableList<Kayitlar> kayitlarListe = FXCollections.observableArrayList();
@@ -141,37 +139,15 @@ public class ContactsController {
 
             Optional<ButtonType> action = alert.showAndWait();
             if (action.get() == buttonTypeOk) {
-                System.out.println(kayit.getKayit_id());
-                System.out.println(txt_menu_ad.getText());
-                System.out.println(txt_menu_ad.getText().trim());
-                sql="UPDATE kayitlar SET kayit_adi=?, kayit_soyadi=?, kayit_mail=? WHERE kayit_id=?";
-                System.out.println(sql);
-                try {
-                    //System.out.println(txt_menu_ad.getText());
-                    sorguIfadesi=baglanti.prepareStatement(sql);
-                    sorguIfadesi.setString(1,txt_menu_ad.getText().trim());
-                    sorguIfadesi.setString(2,txt_menu_soyad.getText().trim());
-                    sorguIfadesi.setString(3,txt_menu_mail.getText().trim());
-                    sorguIfadesi.setInt(4,kayit.getKayit_id());
-                    sorguIfadesi.executeUpdate();
-                    System.out.println("Kayıt güncellendi.");
-                    degerleriGetir(kayitlar_tablo);
+                VeritabaniUtil.kayitGuncelle(txt_menu_ad.getText(),txt_menu_soyad.getText(),txt_menu_mail.getText(),kayit.getKayit_id());
+                System.out.println("Kayıt güncellendi.");
+                degerleriGetir(kayitlar_tablo);
 
-                    txt_menu_ad.clear();
-                    txt_menu_soyad.clear();
-                    txt_menu_mail.clear();
-
-                } catch (Exception e) {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Hata");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Güncelleme işlemi sırasında bir hata oluştu.");
-
-                }
+                txt_menu_ad.clear();
+                txt_menu_soyad.clear();
+                txt_menu_mail.clear();
             }
         }
-
-
     }
 
     @FXML
@@ -199,44 +175,20 @@ public class ContactsController {
 
             Optional<ButtonType> action = alert.showAndWait();
             if (action.get() == buttonTypeOk) {
-                sql = "DELETE FROM kayitlar where kayit_id=" + kayit.getKayit_id();
-                try {
-                    sorguIfadesi = baglanti.prepareStatement(sql);
-                    sorguIfadesi.executeUpdate();
-                    System.out.println("Kayıt silindi.");
-                    txt_menu_ad.clear();
-                    txt_menu_soyad.clear();
-                    txt_menu_mail.clear();
-                    degerleriGetir(kayitlar_tablo);
-                } catch (Exception e) {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Hata");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Silme işlemi sırasında bir hata oluştu.");
-
-                }
+                VeritabaniUtil.kayitSil(kayit.getKayit_id());
+                txt_menu_ad.clear();
+                txt_menu_soyad.clear();
+                txt_menu_mail.clear();
+                degerleriGetir(kayitlar_tablo);
             }
         }
     }
 
-    public Integer returnID(String kadi) {
-        String kullanici_adi="select id from kullanicilar where k_adi=?";
-        try {
-            sorguIfadesi=baglanti.prepareStatement(kullanici_adi);
-            sorguIfadesi.setString(1,lbl_controller.getText());
-            ResultSet get_kullanici_id = sorguIfadesi.executeQuery();
-            if (get_kullanici_id.next()) {
-                return get_kullanici_id.getInt("id");
-            }
-        } catch (Exception e) {
-            System.out.println("hata");
-        }
-        return null;
-    }
+
 
     @FXML
     void btn_contacts_yeni_click(ActionEvent event) {
-        sql="insert into kayitlar (kayit_adi, kayit_soyadi, kayit_mail, kullanici_id) values (?,?,?,?)";
+        //sql="insert into kayitlar (kayit_adi, kayit_soyadi, kayit_mail, kullanici_id) values (?,?,?,?)";
         if (txt_menu_ad.getText().isEmpty() || txt_menu_soyad.getText().isEmpty() || txt_menu_mail.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Kayıt Bilgi");
@@ -246,38 +198,11 @@ public class ContactsController {
         }
         else {
             System.out.println("hello");
-            /*
-            String kullanici_adi="select id from kullanicilar where k_adi=?";
-            try {
-                sorguIfadesi=baglanti.prepareStatement(kullanici_adi);
-                sorguIfadesi.setString(1,lbl_controller.getText());
-                ResultSet get_kullanici_id = sorguIfadesi.executeQuery();
-                while (get_kullanici_id.next()) {
-                    System.out.println(get_kullanici_id.getInt("id"));
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            */
-
-            try {
-                int id = returnID(lbl_controller.getText());
-
-                sorguIfadesi = baglanti.prepareStatement(sql);
-                sorguIfadesi.setString(1,txt_menu_ad.getText());
-                sorguIfadesi.setString(2,txt_menu_soyad.getText());
-                sorguIfadesi.setString(3,txt_menu_mail.getText());
-                sorguIfadesi.setInt(4,id);
-                sorguIfadesi.execute();
-                degerleriGetir(kayitlar_tablo);
-                txt_menu_ad.clear();
-                txt_menu_soyad.clear();
-                txt_menu_mail.clear();
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
+            VeritabaniUtil.kayitEkle(lbl_controller.getText().trim(),txt_menu_ad.getText(),txt_menu_soyad.getText(),txt_menu_mail.getText());
+            degerleriGetir(kayitlar_tablo);
+            txt_menu_ad.clear();
+            txt_menu_soyad.clear();
+            txt_menu_mail.clear();
         }
     }
 

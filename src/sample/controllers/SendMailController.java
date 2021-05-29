@@ -80,7 +80,7 @@ public class SendMailController {
     public void displayContname(String username) {
         lbl_controller.setText(username);
         System.out.println(lbl_controller.getText().trim());
-        returnMail(lbl_controller.getText());
+        VeritabaniUtil.returnMail(lbl_controller.getText());
         degerleriGetir(kayitlar_tablo);
     }
 
@@ -141,40 +141,11 @@ public class SendMailController {
     @FXML
     private Button mail_gonder;
 
-    Connection baglanti2=null;
-    PreparedStatement sorguIfadesi2=null;
+    //Connection baglanti2=null;
+    //PreparedStatement sorguIfadesi2=null;
 
 
-    public String returnMail(String kadi) {
-        baglanti2 = VeritabaniUtil.Baglan();
-        String kullanici_mail="select mail_adres from kullanicilar where k_adi=?";
-        try {
-            sorguIfadesi2=baglanti2.prepareStatement(kullanici_mail);
-            sorguIfadesi2.setString(1,lbl_controller.getText());
-            ResultSet get_kullanici_mail = sorguIfadesi2.executeQuery();
-            get_kullanici_mail.next();
-            return get_kullanici_mail.getString("mail_adres");
 
-        } catch (Exception e) {
-            System.out.println("hata");
-        }
-        return "Deger Donmedi";
-    }
-    public String returnPass(String kadi) {
-        baglanti2 = VeritabaniUtil.Baglan();
-        String kullanici_mail="select parola from kullanicilar where k_adi=?";
-        try {
-            sorguIfadesi2=baglanti2.prepareStatement(kullanici_mail);
-            sorguIfadesi2.setString(1,lbl_controller.getText());
-            ResultSet get_kullanici_mail = sorguIfadesi2.executeQuery();
-            get_kullanici_mail.next();
-            return get_kullanici_mail.getString("parola");
-
-        } catch (Exception e) {
-            System.out.println("hata");
-        }
-        return "Deger Donmedi";
-    }
 
     @FXML
     void mail_gonder_click(ActionEvent event) {
@@ -189,8 +160,8 @@ public class SendMailController {
         // SMTP server bilgileri
         String host = "smtp.gmail.com";
         String port = "587";
-        String mailFrom = returnMail(lbl_controller.getText());
-        String password = returnPass(lbl_controller.getText());
+        String mailFrom = VeritabaniUtil.returnMail(lbl_controller.getText());
+        String password = VeritabaniUtil.returnPass(lbl_controller.getText());
 
         // Gonderilecek mail bilgisi
         String mailTo = txt_toAddress.getText();
