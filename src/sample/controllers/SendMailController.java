@@ -178,6 +178,13 @@ public class SendMailController {
 
     @FXML
     void mail_gonder_click(ActionEvent event) {
+        if (txt_subject.getText().isEmpty() || txt_message.getText().isEmpty() || txt_toAddress.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Gönderme Hatası");
+            alert.setHeaderText(null);
+            alert.setContentText("Lütfen \"Mail Konusu\",\"Alıcı Adresi\" ve \"İçerik\" kısımlarını doldurun. .");
+            alert.showAndWait();
+        } else {
 
         // SMTP server bilgileri
         String host = "smtp.gmail.com";
@@ -198,16 +205,21 @@ public class SendMailController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Gönderme Başarılı");
             alert.setHeaderText(null);
-            alert.setContentText("\""+txt_subject.getText()+"\" konulu mail, \""+txt_toAddress.getText()+"\" adresine gönderildi.");
+            alert.setContentText("\"" + txt_subject.getText() + "\" konulu mail, \"" + txt_toAddress.getText() + "\" adresine gönderildi.");
             alert.showAndWait();
             txt_toAddress.clear();
             txt_message.clear();
             txt_subject.clear();
 
         } catch (Exception ex) {
-            System.out.println("Failed to sent email.");
-            ex.printStackTrace();
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Gönderme Hatası");
+            alert.setContentText("Lütfen \"Alıcı Adresi\" kısmını kontrol ediniz.\n \"Alıcı Adresi\" kısmının geçerli bir mail adresi olmasına özen gösteriniz.");
+            alert.setHeaderText(null);
+            alert.showAndWait();
         }
+    }
     }
 
 

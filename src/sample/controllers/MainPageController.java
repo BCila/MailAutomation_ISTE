@@ -1,5 +1,6 @@
 package sample.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -36,6 +37,38 @@ public class MainPageController extends LoginPageController {
 
     @FXML
     private Button btn_menu_cikis;
+
+    @FXML
+    private Button btn_oturum;
+
+    @FXML
+    void btn_oturum_click(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Oturumu Kapat");
+        alert.setHeaderText(null);
+        alert.setContentText("Oturumu kapatmak istediğinize emin misiniz? ");
+
+        ButtonType buttonTypeOk = new ButtonType("Evet", ButtonBar.ButtonData.YES);
+        ButtonType buttonTypeCancel = new ButtonType("Hayır", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeOk,buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOk){
+            System.out.println("Oturum Kapandı");
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/LoginPage.fxml"));
+                AnchorPane panel = (AnchorPane) loader.load();
+                anchor_fitted.getChildren().setAll(panel);
+
+            } catch (Exception e) {
+                System.out.println("Oturum Kapatma Hatası");
+            }
+
+        } else {
+            alert.close();
+        }
+
+    }
 
     @FXML
     private AnchorPane anchor_govde;
@@ -108,8 +141,18 @@ public class MainPageController extends LoginPageController {
 
     }
 
+    public void pageLoader() {
+        try {
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../fxml_files/SendMail.fxml"));
+            AnchorPane panel2 = (AnchorPane) loader2.load();
+            anchor_govde.getChildren().setAll(panel2);
+        } catch (Exception e) {
+            System.out.println("Sayfa yüklenemedi");
+        }
+    }
+
     @FXML
     void initialize() {
-
+        pageLoader();
     }
 }

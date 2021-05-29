@@ -18,7 +18,7 @@
                <children>
                   <VBox layoutY="230.0" prefHeight="240.0" prefWidth="233.0">
                      <children>
-                        <Button fx:id="btn_contacts_yeni" mnemonicParsing="false" onAction="#btn_contacts_yeni_click" prefHeight="60.0" prefWidth="233.0" text="Yeni Kayıt" />
+                        <Button fx:id="btn_contacts_yeni" mnemonicParsing="false" onAction="#btn_contacts_yeni_click" prefHeight="60.0" prefWidth="233.0" text="Kaydet" />
                         <Button fx:id="btn_contacts_guncelle" mnemonicParsing="false" onAction="#btn_contacts_guncelle_click" prefHeight="60.0" prefWidth="233.0" text="Güncelle" />
                         <Button fx:id="btn_contacts_sil" mnemonicParsing="false" onAction="#btn_contacts_sil_click" prefHeight="60.0" prefWidth="233.0" text="Sil" />
                         <Button fx:id="btn_contacts_yenile" mnemonicParsing="false" onAction="#btn_contacts_yenile_click" prefHeight="60.0" prefWidth="233.0" text="Yenile" />

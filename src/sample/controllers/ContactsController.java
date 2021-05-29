@@ -116,83 +116,105 @@ public class ContactsController {
     @FXML
     void btn_contacts_guncelle_click(ActionEvent event) {
 
-        Kayitlar kayit = new Kayitlar();
-        kayit=(Kayitlar) kayitlar_tablo.getItems().get(kayitlar_tablo.getSelectionModel().getSelectedIndex());
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Kayıt Güncelle");
-        alert.setHeaderText(null);
-        alert.setContentText(
-                kayit.getKayit_ad()+" "+kayit.getKayit_soyad()
-                +" isimli kayıt, "+txt_menu_ad.getText().trim()+" "+txt_menu_soyad.getText().trim()+"\n"
-                +"ve "+kayit.getKayit_mail()+" adresi "+txt_menu_mail.getText().trim()
-                +" ile değiştirilecek. Emin misiniz?");
+        if (txt_menu_ad.getText().isEmpty() || txt_menu_soyad.getText().isEmpty() || txt_menu_mail.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Güncelleme Hata");
+            alert.setHeaderText(null);
+            alert.setContentText("Lütfen güncellenecek kaydı tablodan seçin.");
+            alert.showAndWait();
+        }
+        else {
+            Kayitlar kayit = new Kayitlar();
+            kayit=(Kayitlar) kayitlar_tablo.getItems().get(kayitlar_tablo.getSelectionModel().getSelectedIndex());
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Kayıt Güncelle");
+            alert.setHeaderText(null);
+            alert.setContentText(
+                    kayit.getKayit_ad()+" "+kayit.getKayit_soyad()
+                            +" isimli kayıt, "+txt_menu_ad.getText().trim()+" "+txt_menu_soyad.getText().trim()+"\n"
+                            +"ve "+kayit.getKayit_mail()+" adresi "+txt_menu_mail.getText().trim()
+                            +" ile değiştirilecek. Emin misiniz?");
 
-        ButtonType buttonTypeOk = new ButtonType("Evet", ButtonBar.ButtonData.YES);
-        ButtonType buttonTypeCancel = new ButtonType("Hayır", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonTypeOk,buttonTypeCancel);
+            ButtonType buttonTypeOk = new ButtonType("Evet", ButtonBar.ButtonData.YES);
+            ButtonType buttonTypeCancel = new ButtonType("Hayır", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(buttonTypeOk,buttonTypeCancel);
 
-        Optional<ButtonType> action = alert.showAndWait();
-        if (action.get() == buttonTypeOk) {
-            System.out.println(kayit.getKayit_id());
-            System.out.println(txt_menu_ad.getText());
-            System.out.println(txt_menu_ad.getText().trim());
-            sql="UPDATE kayitlar SET kayit_adi=?, kayit_soyadi=?, kayit_mail=? WHERE kayit_id=?";
-            System.out.println(sql);
-            try {
-                //System.out.println(txt_menu_ad.getText());
-                sorguIfadesi=baglanti.prepareStatement(sql);
-                sorguIfadesi.setString(1,txt_menu_ad.getText().trim());
-                sorguIfadesi.setString(2,txt_menu_soyad.getText().trim());
-                sorguIfadesi.setString(3,txt_menu_mail.getText().trim());
-                sorguIfadesi.setInt(4,kayit.getKayit_id());
-                sorguIfadesi.executeUpdate();
-                System.out.println("Kayıt güncellendi.");
-                degerleriGetir(kayitlar_tablo);
+            Optional<ButtonType> action = alert.showAndWait();
+            if (action.get() == buttonTypeOk) {
+                System.out.println(kayit.getKayit_id());
+                System.out.println(txt_menu_ad.getText());
+                System.out.println(txt_menu_ad.getText().trim());
+                sql="UPDATE kayitlar SET kayit_adi=?, kayit_soyadi=?, kayit_mail=? WHERE kayit_id=?";
+                System.out.println(sql);
+                try {
+                    //System.out.println(txt_menu_ad.getText());
+                    sorguIfadesi=baglanti.prepareStatement(sql);
+                    sorguIfadesi.setString(1,txt_menu_ad.getText().trim());
+                    sorguIfadesi.setString(2,txt_menu_soyad.getText().trim());
+                    sorguIfadesi.setString(3,txt_menu_mail.getText().trim());
+                    sorguIfadesi.setInt(4,kayit.getKayit_id());
+                    sorguIfadesi.executeUpdate();
+                    System.out.println("Kayıt güncellendi.");
+                    degerleriGetir(kayitlar_tablo);
 
-                txt_menu_ad.clear();
-                txt_menu_soyad.clear();
-                txt_menu_mail.clear();
+                    txt_menu_ad.clear();
+                    txt_menu_soyad.clear();
+                    txt_menu_mail.clear();
 
-            } catch (Exception e) {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Hata");
-                alert.setHeaderText(null);
-                alert.setContentText("Güncelleme işlemi sırasında bir hata oluştu.");
+                } catch (Exception e) {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Hata");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Güncelleme işlemi sırasında bir hata oluştu.");
 
+                }
             }
         }
+
+
     }
 
     @FXML
     void btn_contacts_sil_click(ActionEvent event) {
-        Kayitlar kayit = new Kayitlar();
-        kayit=(Kayitlar) kayitlar_tablo.getItems().get(kayitlar_tablo.getSelectionModel().getSelectedIndex());
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Kişi Sil");
-        alert.setHeaderText(null);
-        alert.setContentText(kayit.getKayit_ad()+" "+kayit.getKayit_soyad()+" isimli kayıt silinecek. Emin misiniz?");
 
-        ButtonType buttonTypeOk = new ButtonType("Evet", ButtonBar.ButtonData.YES);
-        ButtonType buttonTypeCancel = new ButtonType("Hayır", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonTypeOk,buttonTypeCancel);
+        if (txt_menu_ad.getText().isEmpty() || txt_menu_soyad.getText().isEmpty() || txt_menu_mail.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Silme Hatası");
+            alert.setHeaderText(null);
+            alert.setContentText("Lütfen silinecek kaydı tablodan seçin.");
+            alert.showAndWait();
+        }
+        else {
 
-        Optional<ButtonType> action = alert.showAndWait();
-        if (action.get() == buttonTypeOk) {
-            sql="DELETE FROM kayitlar where kayit_id="+kayit.getKayit_id();
-            try {
-                sorguIfadesi=baglanti.prepareStatement(sql);
-                sorguIfadesi.executeUpdate();
-                System.out.println("Kayıt silindi.");
-                txt_menu_ad.clear();
-                txt_menu_soyad.clear();
-                txt_menu_mail.clear();
-                degerleriGetir(kayitlar_tablo);
-            } catch (Exception e) {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Hata");
-                alert.setHeaderText(null);
-                alert.setContentText("Silme işlemi sırasında bir hata oluştu.");
+            Kayitlar kayit = new Kayitlar();
+            kayit=(Kayitlar) kayitlar_tablo.getItems().get(kayitlar_tablo.getSelectionModel().getSelectedIndex());
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Kişi Sil");
+            alert.setHeaderText(null);
+            alert.setContentText(kayit.getKayit_ad()+" "+kayit.getKayit_soyad()+" isimli kayıt silinecek. Emin misiniz?");
 
+            ButtonType buttonTypeOk = new ButtonType("Evet", ButtonBar.ButtonData.YES);
+            ButtonType buttonTypeCancel = new ButtonType("Hayır", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(buttonTypeOk,buttonTypeCancel);
+
+            Optional<ButtonType> action = alert.showAndWait();
+            if (action.get() == buttonTypeOk) {
+                sql = "DELETE FROM kayitlar where kayit_id=" + kayit.getKayit_id();
+                try {
+                    sorguIfadesi = baglanti.prepareStatement(sql);
+                    sorguIfadesi.executeUpdate();
+                    System.out.println("Kayıt silindi.");
+                    txt_menu_ad.clear();
+                    txt_menu_soyad.clear();
+                    txt_menu_mail.clear();
+                    degerleriGetir(kayitlar_tablo);
+                } catch (Exception e) {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Hata");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Silme işlemi sırasında bir hata oluştu.");
+
+                }
             }
         }
     }
