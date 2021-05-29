@@ -53,8 +53,6 @@ public class ContactsController {
         lbl_controller.setText(username);
         System.out.println(lbl_controller.getText().trim());
         degerleriGetir(kayitlar_tablo);
-
-
     }
 
 

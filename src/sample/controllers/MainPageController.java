@@ -84,9 +84,12 @@ public class MainPageController extends LoginPageController {
     void btn_menu_mailgonder_click(ActionEvent event) {
         System.out.println("gonder");
         try {
-            AnchorPane panel = (AnchorPane) FXMLLoader.load(getClass().getResource("../fxml_files/SendMail.fxml"));
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../fxml_files/SendMail.fxml"));
+            AnchorPane panel2 = (AnchorPane) loader2.load();
             //panel.getStylesheets().add(getClass().getResource("../css_files/SendMail.css").toExternalForm());
-            anchor_govde.getChildren().setAll(panel);
+            SendMailController smController = loader2.getController();
+            smController.displayContname(lbl_username.getText());
+            anchor_govde.getChildren().setAll(panel2);
         } catch (Exception e) {e.printStackTrace();}
     }
 
@@ -107,10 +110,6 @@ public class MainPageController extends LoginPageController {
 
     @FXML
     void initialize() {
-        try {
-            AnchorPane panel = (AnchorPane) FXMLLoader.load(getClass().getResource("../fxml_files/SendMail.fxml"));
-            //panel.getStylesheets().add(getClass().getResource("../css_files/SendMail.css").toExternalForm());
-            anchor_govde.getChildren().setAll(panel);
-        } catch (Exception e) {e.printStackTrace();}
+
     }
 }
