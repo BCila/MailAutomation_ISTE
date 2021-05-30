@@ -14,12 +14,8 @@
             <children>
                 <AnchorPane fx:id="anchor_sol_menu" prefHeight="768.0" prefWidth="230.0">
                <children>
-                  <VBox prefHeight="360.0" prefWidth="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox layoutY="230.0" prefHeight="360.0" prefWidth="230.0">
                      <children>
-                        <ImageView fx:id="img_menu" fitHeight="230.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/iconw.png" />
-                           </image></ImageView>
                         <Button fx:id="btn_menu_mailgonder" mnemonicParsing="false" onAction="#btn_menu_mailgonder_click" prefHeight="60.0" prefWidth="260.0" text="Mail Gönder">
                            <font>
                               <Font size="15.0" />
@@ -30,6 +26,11 @@
                            </font></Button>
                      </children>
                   </VBox>
+                  <ImageView fx:id="img_menu" fitHeight="150.0" fitWidth="150.0" layoutX="40.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/iconw.png" />
+                     </image>
+                  </ImageView>
                   <Button fx:id="btn_oturum" layoutY="648.0" mnemonicParsing="false" onAction="#btn_oturum_click" prefHeight="60.0" prefWidth="230.0" text="Oturumu Kapat">
                      <font>
                         <Font size="15.0" />
@@ -50,7 +51,29 @@
                      </font>
                   </Label>
                </children></AnchorPane>
-                <AnchorPane fx:id="anchor_govde" layoutX="230.0" prefHeight="768.0" prefWidth="794.0" />
+                <AnchorPane fx:id="anchor_govde" layoutX="230.0" prefHeight="768.0" prefWidth="794.0">
+               <children>
+                  <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="247.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/iste_arma.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="248.0" layoutY="414.0" text="Nesne Tabanlı Programlama" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="301.0" layoutY="449.0" text="Otomasyon Ödevi" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="340.0" layoutY="636.0" text="Burak Anıl Cila" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
             </children>
         </AnchorPane>
     </children>
