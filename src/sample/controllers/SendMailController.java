@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -68,6 +70,10 @@ public class SendMailController {
 
     }
 
+    Connection baglanti=null;
+    PreparedStatement sorguIfadesi=null;
+    ResultSet getirilen=null;
+    String sql;
 
     @FXML
     private ResourceBundle resources;
@@ -99,10 +105,7 @@ public class SendMailController {
     @FXML
     private TableColumn<Kayitlar, String> tablo_mail;
 
-    Connection baglanti=null;
-    PreparedStatement sorguIfadesi=null;
-    ResultSet getirilen=null;
-    String sql;
+
 
     public void degerleriGetir(TableView tablo) {
         baglanti = VeritabaniUtil.Baglan();
@@ -140,11 +143,6 @@ public class SendMailController {
 
     @FXML
     private Button mail_gonder;
-
-    //Connection baglanti2=null;
-    //PreparedStatement sorguIfadesi2=null;
-
-
 
 
     @FXML
@@ -209,6 +207,9 @@ public class SendMailController {
 
     @FXML
     void initialize() {
+        degerleriGetir(kayitlar_tablo);
+
+
         assert kayitlar_tablo != null : "fx:id=\"kayitlar_tablo\" was not injected: check your FXML file 'SendMail.fxml'.";
         assert tablo_id != null : "fx:id=\"tablo_id\" was not injected: check your FXML file 'SendMail.fxml'.";
         assert tablo_ad != null : "fx:id=\"tablo_ad\" was not injected: check your FXML file 'SendMail.fxml'.";

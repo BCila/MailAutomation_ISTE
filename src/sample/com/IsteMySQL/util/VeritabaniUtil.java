@@ -1,6 +1,7 @@
 package sample.com.IsteMySQL.util;
 import javafx.scene.control.Alert;
-
+import javafx.scene.control.TableView;
+import sample.emailValidation.isValidAddress;
 import java.sql.*;
 
 public class VeritabaniUtil {
@@ -16,6 +17,7 @@ public class VeritabaniUtil {
             return null;
         }
     }
+
 
     public static String returnMail(String kadi) {
         Connection baglanti2=null;
@@ -138,4 +140,73 @@ public class VeritabaniUtil {
 
         }
     }
+
+    public static void kayitOl(String kadi,String mail,String kpass,String kpass2) {
+        Connection baglanti=null;
+        PreparedStatement sorguIfadesi=null;
+        String sql;
+        baglanti = VeritabaniUtil.Baglan();
+        sql="insert into kullanicilar(k_adi,mail_adres,parola) values (?,?,?)";
+        if (isValidAddress.isValidEmailAddress(mail)){
+            if (kpass.equals(kpass2)) {
+                try {
+                    sorguIfadesi=baglanti.prepareStatement(sql);
+                    sorguIfadesi.setString(1,kadi);
+                    sorguIfadesi.setString(2,mail);
+                    sorguIfadesi.setString(3,kpass);
+                    sorguIfadesi.executeUpdate();
+
+                    Alert alert=new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Kayıt");
+                    alert.setHeaderText("Kayıt Başarılı");
+                    alert.setContentText("Kaydınız başarılı bir şekilde oluşturuldu.");
+                    alert.showAndWait();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Uyarı");
+                alert.setHeaderText("");
+                alert.setContentText("Parola ve Parola Takrar birbinine uymamaktadır!");
+                alert.showAndWait();
+            }
+
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Uyarı");
+            alert.setHeaderText("");
+            alert.setContentText("Mail adresi '@gmail.com' formatında olmalıdır!");
+            alert.showAndWait();
+        }
+    }
+
+    /* Mail gönderme işlemi sırasında veritabanındaki şifre ve google serverda
+    kullanılan şifre uyuşmadığından mail gönderme işleminde hata veriyor
+    bundan dolayı md5 kullanılmadı
+
+
+    public static String MD5Sifrele(String icerik) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            //Byte olarak oku
+            byte[] sifrelenmis = md.digest(icerik.getBytes());
+            BigInteger no = new BigInteger(1, sifrelenmis);
+            //Hex hesapla
+            String hashIcerik = no.toString(16);
+            while (hashIcerik.length()<32) {
+                hashIcerik="0"+hashIcerik;
+            }
+            return hashIcerik;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+     */
+
 }

@@ -13,7 +13,7 @@ public class Main extends Application {
         try {
             AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("fxml_files/LoginPage.fxml"));
             Scene scene = new Scene(root,1024,768);
-            //scene.getStylesheets().add(getClass().getResource("css_files/LoginPage.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("css_files/LoginPage.css").toExternalForm());
             primaryStage.resizableProperty().setValue(false);
             primaryStage.setScene(scene);
             primaryStage.show();

@@ -23,6 +23,11 @@ public class ContactsController {
         baglanti= VeritabaniUtil.Baglan();
     }
 
+    Connection baglanti=null;
+    PreparedStatement sorguIfadesi=null;
+    ResultSet getirilen=null;
+    String sql;
+
     @FXML
     private ResourceBundle resources;
 
@@ -36,6 +41,9 @@ public class ContactsController {
     private AnchorPane contacts_menu;
 
     @FXML
+    private SplitPane split_pane;
+
+    @FXML
     private Button btn_contacts_yeni;
 
     @FXML
@@ -46,6 +54,7 @@ public class ContactsController {
 
     @FXML
     private Button btn_contacts_yenile;
+
 
     @FXML
     private Label lbl_controller;
@@ -66,10 +75,7 @@ public class ContactsController {
     private TextField txt_menu_mail;
 
 
-    Connection baglanti=null;
-    PreparedStatement sorguIfadesi=null;
-    ResultSet getirilen=null;
-    String sql;
+
 
 
     @FXML
@@ -139,7 +145,10 @@ public class ContactsController {
 
             Optional<ButtonType> action = alert.showAndWait();
             if (action.get() == buttonTypeOk) {
+
+                //Veritabanında Güncelleme
                 VeritabaniUtil.kayitGuncelle(txt_menu_ad.getText(),txt_menu_soyad.getText(),txt_menu_mail.getText(),kayit.getKayit_id());
+
                 System.out.println("Kayıt güncellendi.");
                 degerleriGetir(kayitlar_tablo);
 
@@ -175,7 +184,10 @@ public class ContactsController {
 
             Optional<ButtonType> action = alert.showAndWait();
             if (action.get() == buttonTypeOk) {
+
+                //Veritabanından Silme
                 VeritabaniUtil.kayitSil(kayit.getKayit_id());
+
                 txt_menu_ad.clear();
                 txt_menu_soyad.clear();
                 txt_menu_mail.clear();
@@ -197,8 +209,9 @@ public class ContactsController {
             alert.showAndWait();
         }
         else {
-            System.out.println("hello");
+            //Veritabanına Ekleme
             VeritabaniUtil.kayitEkle(lbl_controller.getText().trim(),txt_menu_ad.getText(),txt_menu_soyad.getText(),txt_menu_mail.getText());
+
             degerleriGetir(kayitlar_tablo);
             txt_menu_ad.clear();
             txt_menu_soyad.clear();

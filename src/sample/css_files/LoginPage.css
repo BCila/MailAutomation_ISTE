@@ -7,6 +7,8 @@
 
 .text-field {
     -fx-border: none;
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-text-fill: white;
 }
 .button {
     -fx-background-color: #C8A3B5;

@@ -119,10 +119,11 @@ public class MainPageController extends LoginPageController {
         try {
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../fxml_files/SendMail.fxml"));
             AnchorPane panel2 = (AnchorPane) loader2.load();
-            //panel.getStylesheets().add(getClass().getResource("../css_files/SendMail.css").toExternalForm());
+            panel2.getStylesheets().add(getClass().getResource("../css_files/SendMail.css").toExternalForm());
             SendMailController smController = loader2.getController();
             smController.displayContname(lbl_username.getText());
             anchor_govde.getChildren().setAll(panel2);
+
         } catch (Exception e) {e.printStackTrace();}
     }
 
@@ -135,24 +136,15 @@ public class MainPageController extends LoginPageController {
             ContactsController controller = loader.getController();
             controller.displayContname(lbl_username.getText());
 
-            //panel.getStylesheets().add(getClass().getResource("../css_files/Contacts.css").toExternalForm());
+            panel.getStylesheets().add(getClass().getResource("../css_files/Contacts.css").toExternalForm());
             anchor_govde.getChildren().setAll(panel);
         } catch (Exception e) {e.printStackTrace();}
 
     }
 
-    public void pageLoader() {
-        try {
-            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("../fxml_files/SendMail.fxml"));
-            AnchorPane panel2 = (AnchorPane) loader2.load();
-            anchor_govde.getChildren().setAll(panel2);
-        } catch (Exception e) {
-            System.out.println("Sayfa yüklenemedi");
-        }
-    }
 
     @FXML
     void initialize() {
-        pageLoader();
+
     }
 }

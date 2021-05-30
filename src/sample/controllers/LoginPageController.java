@@ -11,7 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import sample.com.IsteMySQL.util.VeritabaniUtil;
-import sample.emailValidation.isValidAddress;
 import java.sql.*;
 
 
@@ -71,9 +70,9 @@ public class LoginPageController{
     String sql;
     String kullanici_adi;
 
-
     @FXML
     void btn_giris_click(ActionEvent event) {
+
         sql="select * from kullanicilar where (k_adi=? or mail_adres=?) and parola=?";
         try {
             sorguIfadesi=baglanti.prepareStatement(sql);
@@ -91,29 +90,6 @@ public class LoginPageController{
             }
             else {
                 try {
-                    /*
-                    String username = txt_giris_kadi.getText();
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/MainPage.fxml"));
-
-                    MainPageController mpcontroller = loader.getController();
-                    mpcontroller.displayUsername(username);
-                    */
-
-                    /*
-                    AnchorPane panel = (AnchorPane) FXMLLoader.load(getClass().getResource("../fxml_files/MainPage.fxml"));
-                    panel.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
-                    anchor_login_body.getChildren().setAll(panel);
-                     */
-                    /*
-                    Stage stage1 = new Stage();
-                    AnchorPane anchor1 = (AnchorPane)FXMLLoader.load(getClass().getResource("../fxml_files/MainPage.fxml"));
-                    Scene scene = new Scene(anchor1,1024,768);
-                    scene.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
-                    stage1.resizableProperty().setValue(false);
-                    stage1.setScene(scene);
-                    stage1.show();
-
-                     */
 
                     kullanici_adi="select mail_adres from kullanicilar where k_adi=?";
                     sorguIfadesi=baglanti.prepareStatement(kullanici_adi);
@@ -123,25 +99,15 @@ public class LoginPageController{
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/MainPage.fxml"));
                     AnchorPane pane2 = (AnchorPane) loader.load();
-                    //pane2.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
+                    pane2.getStylesheets().add(getClass().getResource("../css_files/MainPage.css").toExternalForm());
 
                     MainPageController mpCont = loader.getController();
                     mpCont.displayUsername(txt_giris_kadi.getText());
+
                     while (get_kullanici_adi.next()) {
                         mpCont.displayUsermail(get_kullanici_adi.getString("mail_adres"));
                     }
                     anchor_login_body.getChildren().setAll(pane2);
-
-                    /*
-                    Stage stage2=new Stage();
-                    stage2.setScene(scene2);
-                    stage2.getIcons().add(new Image(getClass().getResourceAsStream("../img/iconw.png")));
-                    stage2.show();
-                    */
-
-
-
-
 
                 } catch (Exception e) {e.printStackTrace();}
             }
@@ -156,50 +122,12 @@ public class LoginPageController{
 
     @FXML
     void btn_kayit_click(ActionEvent event) {
-        sql="insert into kullanicilar(k_adi,mail_adres,parola) values (?,?,?)";
-        if (isValidAddress.isValidEmailAddress(txt_kayit_email.getText())){
-            if (txt_kayit_parola.getText().equals(txt_kayit_parolatekrar.getText())) {
-                try {
-                    sorguIfadesi=baglanti.prepareStatement(sql);
-                    sorguIfadesi.setString(1,txt_kayit_kadi.getText().trim());
-                    sorguIfadesi.setString(2,txt_kayit_email.getText().trim());
-                    sorguIfadesi.setString(3,txt_kayit_parola.getText().trim());
-                    sorguIfadesi.executeUpdate();
-
-                    Alert alert=new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Kayıt");
-                    alert.setHeaderText("Kayıt Başarılı");
-                    alert.setContentText("Kaydınız başarılı bir şekilde oluşturuldu.");
-                    alert.showAndWait();
-                    txt_giris_kadi.setText(txt_kayit_kadi.getText());
-                    txt_kayit_kadi.clear();
-                    txt_kayit_parola.clear();
-                    txt_kayit_email.clear();
-                    txt_kayit_parolatekrar.clear();
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Uyarı");
-                alert.setHeaderText("");
-                alert.setContentText("Parola ve Parola Takrar birbinine uymamaktadır!");
-                alert.showAndWait();
-            }
-
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Uyarı");
-            alert.setHeaderText("");
-            alert.setContentText("Mail adresi '@gmail.com' formatında olmalıdır!");
-            alert.showAndWait();
-        }
-
-
+        VeritabaniUtil.kayitOl(txt_kayit_kadi.getText().trim(),txt_kayit_email.getText().trim(),txt_kayit_parola.getText().trim(),txt_kayit_parolatekrar.getText().trim());
+        txt_giris_kadi.setText(txt_kayit_kadi.getText());
+        txt_kayit_kadi.clear();
+        txt_kayit_parola.clear();
+        txt_kayit_email.clear();
+        txt_kayit_parolatekrar.clear();
     }
 
     @FXML
