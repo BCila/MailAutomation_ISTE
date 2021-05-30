@@ -1,8 +1,10 @@
 package sample.com.IsteMySQL.util;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableView;
 import sample.emailValidation.isValidAddress;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class VeritabaniUtil {
     static Connection conn=null;
@@ -98,20 +100,28 @@ public class VeritabaniUtil {
         String sql;
         baglanti = VeritabaniUtil.Baglan();
         sql="insert into kayitlar (kayit_adi, kayit_soyadi, kayit_mail, kullanici_id) values (?,?,?,?)";
+        if (isValidAddress.isValidEmailAddress(mail)) {
+            try {
+                int getid = VeritabaniUtil.returnID(kadi);
 
-        try {
-            int getid = VeritabaniUtil.returnID(kadi);
-
-            sorguIfadesi = baglanti.prepareStatement(sql);
-            sorguIfadesi.setString(1,ad);
-            sorguIfadesi.setString(2,soyad);
-            sorguIfadesi.setString(3,mail);
-            sorguIfadesi.setInt(4,getid);
-            sorguIfadesi.execute();
+                sorguIfadesi = baglanti.prepareStatement(sql);
+                sorguIfadesi.setString(1, ad);
+                sorguIfadesi.setString(2, soyad);
+                sorguIfadesi.setString(3, mail);
+                sorguIfadesi.setInt(4, getid);
+                sorguIfadesi.execute();
 
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Uyarı");
+            alert.setHeaderText("");
+            alert.setContentText("Mail adresi '@gmail.com' formatında olmalıdır!");
+            alert.showAndWait();
         }
     }
 
@@ -121,23 +131,32 @@ public class VeritabaniUtil {
         String sql;
         baglanti = VeritabaniUtil.Baglan();
         sql="UPDATE kayitlar SET kayit_adi=?, kayit_soyadi=?, kayit_mail=? WHERE kayit_id=?";
-        try {
-            //System.out.println(txt_menu_ad.getText());
-            sorguIfadesi=baglanti.prepareStatement(sql);
-            sorguIfadesi.setString(1,ad);
-            sorguIfadesi.setString(2,soyad);
-            sorguIfadesi.setString(3,mail);
-            sorguIfadesi.setInt(4,id);
-            sorguIfadesi.executeUpdate();
-            System.out.println("Kayıt güncellendi.");
+        if (isValidAddress.isValidEmailAddress(mail)) {
+            try {
+                //System.out.println(txt_menu_ad.getText());
+                sorguIfadesi = baglanti.prepareStatement(sql);
+                sorguIfadesi.setString(1, ad);
+                sorguIfadesi.setString(2, soyad);
+                sorguIfadesi.setString(3, mail);
+                sorguIfadesi.setInt(4, id);
+                sorguIfadesi.executeUpdate();
+                System.out.println("Kayıt güncellendi.");
 
 
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Hata");
-            alert.setHeaderText(null);
-            alert.setContentText("Güncelleme işlemi sırasında bir hata oluştu.");
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hata");
+                alert.setHeaderText(null);
+                alert.setContentText("Güncelleme işlemi sırasında bir hata oluştu.");
 
+            }
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Uyarı");
+            alert.setHeaderText("");
+            alert.setContentText("Mail adresi '@gmail.com' formatında olmalıdır!");
+            alert.showAndWait();
         }
     }
 
@@ -181,6 +200,33 @@ public class VeritabaniUtil {
             alert.setHeaderText("");
             alert.setContentText("Mail adresi '@gmail.com' formatında olmalıdır!");
             alert.showAndWait();
+        }
+    }
+
+    public static void logKayit(String kadi,String adres,String icerik) {
+        Connection baglanti=null;
+        PreparedStatement sorguIfadesi=null;
+        String sql;
+        baglanti = VeritabaniUtil.Baglan();
+        sql="insert into logkayit (adres, icerik, tarih, kullanici_id) values (?,?,?,?)";
+
+        try {
+            int getid = VeritabaniUtil.returnID(kadi);
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            java.util.Date date = new Date();
+            String dateStr = dateFormat.format(date).toString();
+            System.out.println(dateStr);
+
+            sorguIfadesi = baglanti.prepareStatement(sql);
+            sorguIfadesi.setString(1,adres);
+            sorguIfadesi.setString(2,icerik);
+            sorguIfadesi.setString(3,dateStr);
+            sorguIfadesi.setInt(4,getid);
+            sorguIfadesi.execute();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 

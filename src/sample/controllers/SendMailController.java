@@ -171,6 +171,9 @@ public class SendMailController {
         try {
             mailer.sendPlainTextEmail(host, port, mailFrom, password, mailTo,
                     subject, message);
+            //Log kayit
+            VeritabaniUtil.logKayit(lbl_controller.getText().trim(),mailTo,message);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Gönderme Başarılı");
             alert.setHeaderText(null);

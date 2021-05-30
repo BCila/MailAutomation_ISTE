@@ -24,6 +24,11 @@
                            <font>
                               <Font size="15.0" />
                            </font></Button>
+                        <Button fx:id="btn_menu_log" mnemonicParsing="false" onAction="#btn_menu_log_click" prefHeight="60.0" prefWidth="230.0" text="Gönderilen Mail (Log)">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
                      </children>
                   </VBox>
                   <ImageView fx:id="img_menu" fitHeight="150.0" fitWidth="150.0" layoutX="40.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">

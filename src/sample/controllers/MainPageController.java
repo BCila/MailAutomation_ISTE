@@ -36,6 +36,9 @@ public class MainPageController extends LoginPageController {
     private Button btn_menu_yonet;
 
     @FXML
+    private Button btn_menu_log;
+
+    @FXML
     private Button btn_menu_cikis;
 
     @FXML
@@ -140,6 +143,20 @@ public class MainPageController extends LoginPageController {
             anchor_govde.getChildren().setAll(panel);
         } catch (Exception e) {e.printStackTrace();}
 
+    }
+
+    @FXML
+    void btn_menu_log_click(ActionEvent event) {
+        System.out.println("log");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml_files/LogKayit.fxml"));
+            AnchorPane panel = (AnchorPane) loader.load();
+            LogKayitController lkCont = loader.getController();
+            lkCont.displayContname(lbl_username.getText());
+
+            panel.getStylesheets().add(getClass().getResource("../css_files/LogKayit.css").toExternalForm());
+            anchor_govde.getChildren().setAll(panel);
+        } catch (Exception e) {e.printStackTrace();}
     }
 
 
